@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=techstart
+      - POSTGRES_PASSWORD=techstart
+    ports: 
+    - "5432:5432"
+    networks: 
+      - ts_seller
+    container_name: testdjango
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U techstart -d test"]
+      timeout: 5s
+      interval: 5s
+      retries: 3
+networks:
+  ts_seller:
+    name: ts_seller
+    driver: bridge
